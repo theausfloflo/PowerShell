@@ -1,0 +1,165 @@
+###########################################################################################################################################
+############################################################Microsoft PowerShell###########################################################
+###########################################################################################################################################
+
+
+##########################################################
+Open IE and launch a link in fullscreen
+##########################################################
+
+      #Clear all precedent commands
+      Clear-Host
+
+      #Hide PowerShell window
+      PowerShell.exe -windowstyle hidden powershell.ps1
+
+      #IE specific action
+      $ie = New-Object -ComObject InternetExplorer.Application
+          $ie.Visible = $true
+          $ie.fullscreen = $true;
+          $ie.Navigate("http://link.com")
+          
+
+##########################################################
+Interaction of IE (user keyboard)
+##########################################################
+
+      #List of SendKeys variable : https://msdn.microsoft.com/en-us/library/office/aa202943(v=office.10).aspx
+      $wshell = New-Object -ComObject wscript.shell;
+      $wshell.AppActivate('InternetExplorer.Application')	
+      Sleep 5	
+      #Send a Ctrl + R
+      $wshell.SendKeys('^{r}')	
+      Sleep 5
+
+
+##########################################################
+Interaction of IE (user keyboard) loop
+##########################################################
+
+      #Initiate the continue variable	
+      $continue = $true
+      while ($continue){    
+
+        #Waiting the next refresh
+          Start-Sleep -s 120
+
+        #Input commands for refresh the report
+        $wshell = New-Object -ComObject wscript.shell;
+        $wshell.AppActivate('InternetExplorer.Application')	    
+        Sleep 5
+        #Send a Ctrl + R
+        $wshell.SendKeys('^{r}')	
+        Sleep 5
+        #Send a Enter
+        $wshell.SendKeys('~')	 
+        Sleep 30	
+        $wshell.SendKeys('~')	
+
+        continue         
+
+      }
+
+
+##########################################################
+Launch applications
+##########################################################
+
+      start "C:\Program Files (x86)\VMware\VMware Horizon View Client\vmware-view.exe"
+      #IE specific action
+Start-Process -FilePath "C:\Program Files (x86)\Internet Explorer\iexplore.exe" -ArgumentList 'https://link.com'
+
+
+##########################################################
+Copy a file
+##########################################################
+
+      Copy-Item "Source Folder" "Destinary Folder"
+
+
+##########################################################
+Open a bdd / launch a macro / close the bdd
+##########################################################
+
+      $MsAccess = New-Object -ComObject Access.Application
+      $MsAccess.OpenCurrentDatabase('accdb file')
+      $MsAccess.Run('macro name')
+      $MsAccess.Quit()
+
+##########################################################
+Read the content of a txt
+##########################################################
+
+      $variable = (Get-Content "txt file") -join ";"
+      
+      
+##########################################################
+Send a mail with attachment
+##########################################################      
+      
+      Function Global:Send-Email { 
+      [cmdletbinding()]
+      Param (
+      [Parameter(Mandatory=$False,Position=0)]
+      [String]$TOAddress = $TOvariable,
+      [Parameter(Mandatory=$False,Position=1)]
+      [String]$CCAddress = $CCvariable,
+      [Parameter(Mandatory=$False,Position=2)]
+      [String]$Subject = "Subject of the mail",
+      [Parameter(Mandatory=$False,Position=3)]
+      [String]$Body = "Pontypool"
+            )
+      Begin {
+      Clear-Host
+      ###Add-Type -assembly "Microsoft.Office.Interop.Outlook"
+          }
+      Process {
+      ###Create an instance Microsoft Outlook
+      $Outlook = New-Object -ComObject Outlook.Application
+      $Mail = $Outlook.CreateItem(0)
+      $Mail.To = "$TOvariable"
+      $Mail.Cc = "$CCvariable"
+      $Mail.Subject = $Subject
+      $Mail.Body =$Body
+       $Mail.HTMLBody =  "Hello, <br>"
+       $Mail.HTMLBody += " <br>"
+       $Mail.HTMLBody +=  "Body text<br>"
+       $Mail.HTMLBody += " <br>"
+       $Mail.HTMLBody += " <br>"
+       $Mail.HTMLBody += "Regards, <br>"
+       $File = "file to be attached"
+       $Mail.Attachments.Add($File)
+      $Mail.Send()
+             } ###End of Process section
+      End {
+      ###Section to prevent error message in Outlook
+      ##$Outlook.Quit()
+      [System.Runtime.Interopservices.Marshal]::ReleaseComObject($Outlook)
+      $Outlook = $null
+         } ###End of End section!
+      } ###End of function
+
+      ###Example of using this function
+      Send-Email 
+      
+      
+##########################################################
+Create a folde in the folder with day and hours
+##########################################################        
+      
+
+      New-Item -ItemType Directory -Path "link\Saves\.\$((Get-Date).ToString('dd-MM-yyyy'))\.\$((Get-Date).ToString('HH-mm'))"    
+      
+      
+##########################################################
+Remove file
+##########################################################  
+
+
+      Remove-Item "file link"
+      
+      
+##########################################################
+Remove file
+##########################################################  
+      
