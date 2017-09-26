@@ -145,8 +145,7 @@ Send a mail with attachment
       
 ##########################################################
 Create a folde in the folder with day and hours
-##########################################################        
-      
+##########################################################            
 
       New-Item -ItemType Directory -Path "link\Saves\.\$((Get-Date).ToString('dd-MM-yyyy'))\.\$((Get-Date).ToString('HH-mm'))"    
       
@@ -155,11 +154,10 @@ Create a folde in the folder with day and hours
 Remove file
 ##########################################################  
 
-
       Remove-Item "file link"
       
       
 ##########################################################
-Remove file
+
 ##########################################################  
       
