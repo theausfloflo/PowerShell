@@ -158,6 +158,43 @@ Remove file
       
       
 ##########################################################
+Generate a form & button 1
+##########################################################  
+
+      #Create the form
+      Function Generate-Form {
+
+          Add-Type -AssemblyName System.Windows.Forms    
+          Add-Type -AssemblyName System.Drawing
+
+          # Build Form
+          $Form = New-Object System.Windows.Forms.Form
+          $Form.Text = "Bundle IC AS L2 Monitoring"
+          $Form.Size = New-Object System.Drawing.Size(330,235)
+          $Form.StartPosition = "CenterScreen"
+          $Form.MaximizeBox = $False 
+          $Form.Topmost = $False
+          $Form.ShowIcon = $False
+          $Form.BackColor = "White"
+     
+          #Button 1
+          $Button = New-Object System.Windows.Forms.Button
+          $Button.Location = New-Object System.Drawing.Size(35,35)
+          $Button.Size = New-Object System.Drawing.Size(245,23)
+          $Button.Text = "Test connection"
+          $Button.BackColor = "DarkBlue"
+          $Button.ForeColor = "White"
+
+          $Form.Controls.Add($Button)
+
+          #Action when you click on the button
+          $Button.Add_Click(
+              {    
+              Start-Process "http://link.com"
+              }
+          )
+
+
+##########################################################
 
 ##########################################################  
-      
