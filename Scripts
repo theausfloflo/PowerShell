@@ -196,5 +196,31 @@ Generate a form & button 1
 
 
 ##########################################################
+Installation of security certificates
+########################################################## 
 
-##########################################################  
+      #Define the folder of all certificates
+      $Path = "C:\Folder\"
+      #Define the extention of the certificates
+      $Filetype = ".cer"
+
+      $certFile = get-childitem $Path | where {$_.Extension -match $Filetype}
+      $i = 0
+      foreach ($cert in $certFile)
+          {
+              $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+              $cert.import($Path + $certfile.Name[$i])
+              #Installation of all certificates in the "trusted root certificate" library of the current user
+              $store = New-Object System.Security.Cryptography.X509Certificates.X509Store("Root","CurrentUser")
+              $store.Open("MaxAllowed") 
+              $store.Add($cert) 
+              $store.Close()
+              Write-Host "Certificate" $certfile.Name[$i] "- IMPORTED SUCCESSFULLY!"
+              #Repeat for each certificate of the folder
+              $i++            
+      }
+
+
+##########################################################
+
+########################################################## 
