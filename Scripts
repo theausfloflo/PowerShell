@@ -263,5 +263,27 @@ Edit file content
 
 
 ##########################################################
+S/N Screens
+########################################################## 
+
+	$Monitors = Get-WmiObject WmiMonitorID -Namespace root\wmi
+	$LogFile = "C:\Users\f_ser\Desktop\monitors.txt"
+
+	"Manufacturer,Name,Serial" | Out-File $LogFile
+
+	ForEach ($Monitor in $Monitors)
+	{
+		$Manufacturer = ($Monitor.ManufacturerName -notmatch 0 | ForEach{[char]$_}) -join ""
+		$Name = ($Monitor.UserFriendlyName -notmatch 0 | ForEach{[char]$_}) -join ""
+		$Serial = ($Monitor.SerialNumberID -notmatch 0 | ForEach{[char]$_}) -join ""
+
+		"$Manufacturer,$Name,$Serial" | Out-File $LogFile -append
+	}
+
+	Read-Host -Prompt "Press Enter to exit"
+
+
+
+##########################################################
 
 ########################################################## 
