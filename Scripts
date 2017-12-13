@@ -286,5 +286,30 @@ S/N Screens
 
 
 ##########################################################
+Archiving folders
+########################################################## 
+
+	$dateMonth = $((Get-Date).ToString('MM')) - 1
+	$dateYear = $((Get-Date).ToString('yyyy'))
+
+	#Write-Host $dateMonth-$dateYear
+
+	$source = "Z:\Airbus\Airbus_Project\IC_AS_L2\99 - Tools\Request Macro\BDD\Saves"
+	$destination = "C:\Archives\.\$dateMonth-$dateYear.zip"
+
+ 	If(Test-path $destination) {Remove-item $destination}
+
+		Add-Type -assembly "system.io.compression.filesystem"
+		[io.compression.zipfile]::CreateFromDirectory($Source, $destination) 
+		Sleep 10
+		## removes all subfolders of a given folder 
+ 		[System.IO.Directory]::GetDirectories("C:\Saves") | 
+ 		foreach { 
+ 		remove-item $_  -Force -recurse
+ 		} 
+
+
+
+##########################################################
 
 ########################################################## 
