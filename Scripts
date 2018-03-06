@@ -365,18 +365,18 @@ Change Wallpaper
 ########################################################## 
 
 	#html & css format#
-		$htmlformat  = '<title>Dali Decision Tree</title>'
+		$htmlformat  = '<title>Title page</title>'
 		$htmlformat += '<style type="text/css">'
 		$htmlformat += 'BODY{;color:black;font-family:Arial Narrow,sans-serif;font-size:17px;}'
 		$htmlformat += 'TABLE{border-width: 3px;border-style: solid;border-color: black;border-collapse: collapse;}'
 		$htmlformat += 'TH{border-width: 1px;padding: 3px;border-style: solid;border-color: black;background-color:#d8d6d7}'
 		$htmlformat += 'TD{border-width: 1px;padding: 8px;border-style: solid;border-color: black;background-color:#e8e5e6}'
 		$htmlformat += '</style>'
-		$bodyformat = '<h1>DALI Incidents</h1>'
+		$bodyformat = '<h1>Title in the page</h1>'
 	
 	#Convert .csv in .html
 	$html = Import-Csv -delimiter ';' -Path  'link\file.csv' | 
-		Select Job,Log,Resolution | ConvertTo-Html -Head $htmlformat -Body $bodyformat
+		Select Column1,Column2,Column3 | ConvertTo-Html -Head $htmlformat -Body $bodyformat
 
 	$html -replace "&lt;","<" -replace "&quot;",'"' -replace "&gt;",">" | Out-File 'link\Report.html'
 
