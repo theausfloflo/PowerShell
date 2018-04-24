@@ -515,5 +515,26 @@ MySQL Requests (soft prerequisite : MySQL Connector Net)
 
 
 ##########################################################
+.xlsm to html
+##########################################################
+
+	$xlWorkbookxHtml = 44
+
+	$excel = New-Object -ComObject excel.application
+	$excel.visible = $false
+	$folderpath = "Folder\test.xlsm"
+	$workbook = $excel.workbooks.open($folderpath)
+
+	$workbook.saveas("Folder\test.html", $xlWorkbookxHtml)
+	$workbook.close()
+
+	$excel.Quit()
+	$excel = $null
+	[gc]::collect()
+	[gc]::WaitForPendingFinalizers()
+
+
+
+##########################################################
 
 ##########################################################
