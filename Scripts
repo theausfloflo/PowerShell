@@ -391,5 +391,129 @@ End of a process
 	
 
 ##########################################################
+MySQL Request (soft prerequisite : MySQL Connector Net)
+##########################################################
+
+	#Define datasource to use
+	[System.Reflection.Assembly]::LoadWithPartialName("MySql.Data")
+
+	#parameters bdd
+	[string]$sMySQLUserName = 'root'
+
+	[string]$sMySQLPW = ''
+
+	[string]$sMySQLDB = 'test'
+
+	[string]$sMySQLHost = 'localhost'
+
+	[string]$sConnectionString = "server="+$sMySQLHost+";uid=" + $sMySQLUserName + ";pwd=" + $sMySQLPW + ";database="+$sMySQLDB
+
+	#Initialise the connexion
+	$oConnection = New-Object MySql.Data.MySqlClient.MySqlConnection($sConnectionString)
+
+	$Error.Clear()
+
+	#test the connexion
+	try
+	    {
+		$oConnection.Open()
+	    }
+	#if error display msg
+	catch
+	    {
+		write-warning ("Could not open a connection to Database $sMySQLDB on Host $sMySQLHost. Error: "+$Error[0].ToString())
+	    }
+
+		    # Get an instance of all objects need for a SELECT query. The Command object
+		    $oMYSQLCommand = New-Object MySql.Data.MySqlClient.MySqlCommand
+
+		    # DataAdapter Object
+		    $oMYSQLDataAdapter = New-Object MySql.Data.MySqlClient.MySqlDataAdapter
+
+		    # And the DataSet Object
+		    $oMYSQLDataSet = New-Object System.Data.DataSet
+
+		    # Assign the established MySQL connection
+		    $oMYSQLCommand.Connection=$oConnection
+
+
+		    # Define the export query with the export folder (need to be change by the final folder)
+		    $query1 = "SELECT * FROM #TABLE# INTO OUTFILE 'Folder/export.csv'"
+
+		    #Define the queries parameters
+		    $newcommand1 = New-Object MySql.Data.MySqlClient.MySqlCommand($query1, $oConnection)
+
+		    #Execute the queries
+		    $newcommand1.ExecuteNonQuery()
+
+
+
+##########################################################
+MySQL Requests (soft prerequisite : MySQL Connector Net)
+##########################################################
+
+	#Define datasource to use
+	[System.Reflection.Assembly]::LoadWithPartialName("MySql.Data")
+
+	#parameters bdd
+	[string]$sMySQLUserName = 'root'
+
+	[string]$sMySQLPW = ''
+
+	[string]$sMySQLDB = 'test'
+
+	[string]$sMySQLHost = 'localhost'
+
+	[string]$sConnectionString = "server="+$sMySQLHost+";uid=" + $sMySQLUserName + ";pwd=" + $sMySQLPW + ";database="+$sMySQLDB
+
+	#Initialise the connexion
+	$oConnection = New-Object MySql.Data.MySqlClient.MySqlConnection($sConnectionString)
+
+	$Error.Clear()
+
+	#test the connexion
+	try
+	    {
+		$oConnection.Open()
+	    }
+	#if error display msg
+	catch
+	    {
+		write-warning ("Could not open a connection to Database $sMySQLDB on Host $sMySQLHost. Error: "+$Error[0].ToString())
+	    }
+
+
+
+		    # Get an instance of all objects need for a SELECT query. The Command object
+		    $oMYSQLCommand = New-Object MySql.Data.MySqlClient.MySqlCommand
+
+		    # DataAdapter Object
+		    $oMYSQLDataAdapter = New-Object MySql.Data.MySqlClient.MySqlDataAdapter
+
+		    # And the DataSet Object
+		    $oMYSQLDataSet = New-Object System.Data.DataSet
+
+		    # Assign the established MySQL connection
+		    $oMYSQLCommand.Connection=$oConnection
+
+
+		    # Define the queries
+		    $query1 = "UPDATE `#TABLE#` SET `#FIELD#`=''"
+		    $query2 = "UPDATE `#TABLE#` SET `#FIELD#`=''"
+		    $query3 = "UPDATE `#TABLE#` SET `#FIELD#`=''"
+
+		    #Define the queries parameters
+		    $newcommand1 = New-Object MySql.Data.MySqlClient.MySqlCommand($query1, $oConnection)
+		    $newcommand2 = New-Object MySql.Data.MySqlClient.MySqlCommand($query2, $oConnection)
+		    $newcommand3 = New-Object MySql.Data.MySqlClient.MySqlCommand($query3, $oConnection)
+
+		    #Execute the queries
+		    $newcommand1.ExecuteNonQuery()
+		    $newcommand2.ExecuteNonQuery()
+		    $newcommand3.ExecuteNonQuery()
+
+
+
+##########################################################
 
 ##########################################################
